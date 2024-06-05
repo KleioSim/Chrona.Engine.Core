@@ -38,7 +38,22 @@ public interface IEventDef
 
 public interface ITargetFinder
 {
+    IEnumerable<ICondtionFactor> ConditionFactors {  get; }
+
+    IEventTarget Targets { get; }
     IEntity Find(IEntity entity, ABSSession session);
+}
+
+public interface IEventTarget
+{
+    IEnumerable<IEntity> Get(IEntity entity, ISession session);
+}
+
+public interface ICondtionFactor
+{
+    public ICondition Condition { get;  }
+
+    public double Factor { get;  }
 }
 
 public interface ICondition
@@ -81,6 +96,8 @@ public abstract class ABSSession : ISession
 
     public IModder Modder { get; set; }
 
+    private Random random = new Random();
+
     public IEnumerable<IEvent> OnNextTurn()
     {
         foreach (var entity in Entities)
@@ -93,10 +110,28 @@ public abstract class ABSSession : ISession
                 }
 
                 IEntity target = null;
-                if (eventDef.TargetFinder != null
-                    && (target = eventDef.TargetFinder.Find(entity, this)) == null)
+                if (eventDef.TargetFinder != null)
                 {
-                    continue;
+                    foreach(var item in eventDef.TargetFinder.Targets.Get(entity, this))
+                    {
+                        var factorSum = eventDef.TargetFinder.ConditionFactors.Where(x => x.Condition.IsSatisfied(item, this))
+                            .Sum(x => x.Factor);
+                        if(factorSum < 0)
+                        {
+                            continue;
+                        }
+                        if(random.NextDouble()  < factorSum)
+                        {
+                            target = item; 
+                            break;
+                        }
+                    }
+
+                    if(target == null)
+                    {
+                        continue;
+                    }
+
                 }
 
                 var @event = new Event(entity, target, eventDef);
@@ -129,13 +164,5 @@ public class TrueCondtion : ICondition
     public bool IsSatisfied(IEntity entity, ISession session)
     {
         return true;
-    }
-}
-
-public class TargetSelf : ITargetFinder
-{
-    public IEntity Find(IEntity entity, ABSSession session)
-    {
-        return entity;
     }
 }
