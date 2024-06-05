@@ -76,6 +76,7 @@ public class DefToAttribute : Attribute
 
 public abstract class ABSSession : ISession
 {
+    public abstract IEntity Player { get; set; }
     public abstract IEnumerable<IEntity> Entities { get; }
 
     public IModder Modder { get; set; }
@@ -98,7 +99,14 @@ public abstract class ABSSession : ISession
                     continue;
                 }
 
-                yield return new Event(entity, target, eventDef);
+                var @event = new Event(entity, target, eventDef);
+                if (target != Player)
+                {
+                    @event.AIDo();
+                    continue;
+                }
+
+                yield return @event;
             }
         }
     }
@@ -109,6 +117,11 @@ internal class Event : IEvent
     public Event(IEntity from, IEntity to, IEventDef def)
     {
     }
+
+    internal void AIDo()
+    {
+
+    }
 }
 
 public class TrueCondtion : ICondition
@@ -116,5 +129,13 @@ public class TrueCondtion : ICondition
     public bool IsSatisfied(IEntity entity, ISession session)
     {
         return true;
+    }
+}
+
+public class TargetSelf : ITargetFinder
+{
+    public IEntity Find(IEntity entity, ABSSession session)
+    {
+        return entity;
     }
 }
