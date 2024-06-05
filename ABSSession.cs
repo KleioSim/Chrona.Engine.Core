@@ -38,7 +38,7 @@ public interface IEventDef
 
 public interface ITargetFinder
 {
-    IEntity Find(IEntity entity, Session session);
+    IEntity Find(IEntity entity, ABSSession session);
 }
 
 public interface ICondition
@@ -57,10 +57,9 @@ public class Modder : IModder
 
     public Modder(string modPath)
     {
-        EventDefs = AppDomain.CurrentDomain.GetAssemblies()
-            .Single(x => x.FullName.StartsWith("PluginDemo"))
-            .GetExportedTypes()
-            .Where(x => x.IsAssignableTo(typeof(IEventDef)) && x.GetCustomAttribute<DefToAttribute>() != null)
+        EventDefs = AppDomain.CurrentDomain.GetAssemblies().
+            SelectMany(assm => assm.GetExportedTypes()
+                                  .Where(x => x.IsAssignableTo(typeof(IEventDef)) && x.GetCustomAttribute<DefToAttribute>() != null))
             .GroupBy(x => x.GetCustomAttribute<DefToAttribute>().toType)
             .ToDictionary(k => k.Key, v => v.Select(type => Activator.CreateInstance(type) as IEventDef));
     }
@@ -75,9 +74,9 @@ public class DefToAttribute : Attribute
     }
 }
 
-public abstract class Session : ISession
+public abstract class ABSSession : ISession
 {
-    public IEnumerable<IEntity> Entities { get; set; }
+    public abstract IEnumerable<IEntity> Entities { get; }
 
     public IModder Modder { get; set; }
 
