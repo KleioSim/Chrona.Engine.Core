@@ -7,5 +7,4 @@ public interface ITargetFinder
     IEnumerable<ICondtionFactor> ConditionFactors { get; }
 
     IEventTarget Targets { get; }
-    IEntity Find(IEntity entity, ABSSession session);
 }

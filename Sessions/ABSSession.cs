@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
-using Chrona.Engine.Core.Events;
-using Chrona.Engine.Core.Interfaces;
+﻿using Chrona.Engine.Core.Interfaces;
+using System.Reflection;
 
 namespace Chrona.Engine.Core.Sessions;
 
@@ -21,7 +17,29 @@ public abstract class ABSSession : ISession
 
     public IModder Modder { get; set; }
 
-    public Dictionary<Type, Action<IMessage>> dictMessageProcess = new Dictionary<Type, Action<IMessage>>();
+    public Dictionary<Type, MethodInfo> dictMessageProcess = new Dictionary<Type, MethodInfo>();
+
+    public ABSSession()
+    {
+        var methods = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic)
+            .Where(x => x.GetCustomAttribute<MessageProcessAttribute>() != null);
+
+        foreach (var method in methods)
+        {
+            var parameters = method.GetParameters();
+            if (parameters.Length != 1)
+            {
+                throw new Exception();
+            }
+
+            if (!parameters[0].ParameterType.IsAssignableTo(typeof(IMessage)))
+            {
+                throw new Exception();
+            }
+
+            dictMessageProcess.Add(parameters[0].ParameterType, method);
+        }
+    }
 
     public void OnNextTurn()
     {
@@ -30,6 +48,11 @@ public abstract class ABSSession : ISession
 
     public void OnMessage(IMessage message)
     {
-        dictMessageProcess[message.GetType()].Invoke(message);
+        dictMessageProcess[message.GetType()].Invoke(this, new object[] { message });
     }
+}
+
+public class MessageProcessAttribute : Attribute
+{
+
 }
