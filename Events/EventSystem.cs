@@ -54,4 +54,34 @@ internal class EventSystem : IEventSystem
             }
         }
     }
+
+    public IEnumerable<IEvent> OnNexturn2(ISession session, Dictionary<Type, IEnumerable<IEventDef2>> eventDefs)
+    {
+        foreach (var entity in session.Entities)
+        {
+            foreach (var eventDef in eventDefs[entity.GetType()])
+            {
+                if (!eventDef.IsSatisfied(entity, session))
+                {
+                    continue;
+                }
+
+                var target = eventDef.FindTarget(entity, session);
+                if (target == null)
+                {
+                    continue;
+                }
+
+                var @event = new Event(entity, target, eventDef);
+                if (target != session.Player)
+                {
+                    @event.AIDo();
+                    continue;
+                }
+
+                yield return @event;
+            }
+        }
+    }
 }
+

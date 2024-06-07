@@ -12,6 +12,8 @@ public class Event : IEvent
 
     public IEventDef Def { get; set; }
 
+    public IEventDef2 Def2 { get; set; }
+
     public Event(IEntity from, IEntity to, IEventDef def)
     {
         From = from;
@@ -19,6 +21,12 @@ public class Event : IEvent
         Def = def;
     }
 
+    public Event(IEntity from, IEntity to, IEventDef2 def)
+    {
+        From = from;
+        To = to;
+        Def2 = def;
+    }
 
     public void DoOption()
     {
