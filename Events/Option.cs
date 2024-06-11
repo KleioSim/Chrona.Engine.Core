@@ -4,5 +4,12 @@ namespace Chrona.Engine.Core.Events;
 
 public class Option : IOption
 {
-    public IEnumerable<IMessageBind> MessageBinds { get; set; }
+    public string Desc { get; init; }
+
+    public Func<IEntity, IEntity, ISession, IEnumerable<IMessage>> ProductMessage;
+
+    public IEnumerable<IMessage> Do(IEntity entity, IEntity to, ISession session)
+    {
+        return ProductMessage(entity, to, session);
+    }
 }
