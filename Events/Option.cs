@@ -1,15 +1,37 @@
 ﻿using Chrona.Engine.Core.Interfaces;
+using Chrona.Engine.Core.Sessions;
 
 namespace Chrona.Engine.Core.Events;
 
 public class Option : IOption
 {
-    public string Desc { get; init; }
+    public static Action<IMessage>? ProcessMessage;
 
-    public Func<IEntity, IEntity, ISession, IEnumerable<IMessage>> ProductMessage;
+    public string Tip => throw new NotImplementedException();
 
-    public IEnumerable<IMessage> Do(IEntity entity, IEntity to, ISession session)
+    public string Desc => throw new NotImplementedException();
+
+    public IOptionDef Def { get; }
+
+    private EventContext context;
+
+    public Option(IOptionDef Def, EventContext context)
     {
-        return ProductMessage(entity, to, session);
+        this.Def = Def;
+        this.context = context;
+    }
+
+    public void Do()
+    {
+        if (ProcessMessage == null)
+        {
+            throw new Exception();
+        }
+
+        foreach (var message in Def.ProductMessage(context))
+        {
+            ProcessMessage(message);
+        }
     }
 }
+

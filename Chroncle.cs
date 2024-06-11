@@ -12,10 +12,10 @@ public class Chroncle
         {
             session = value;
 
-            Event.ProcessMessage = null;
+            Option.ProcessMessage = null;
             if (session != null)
             {
-                Event.ProcessMessage = session.OnMessage;
+                Option.ProcessMessage = session.OnMessage;
             }
         }
     }

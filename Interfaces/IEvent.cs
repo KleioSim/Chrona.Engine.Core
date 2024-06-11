@@ -2,6 +2,7 @@
 
 public interface IEvent
 {
-    IEntity From { get; }
-    IEntity To { get; }
+    string Title { get; }
+    string Desc { get; }
+    IOption Option { get; }
 }

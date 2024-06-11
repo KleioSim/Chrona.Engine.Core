@@ -24,7 +24,8 @@ internal class EventSystem : IEventSystem
                     continue;
                 }
 
-                var @event = new Event(entity, target, session, eventDef);
+                var context = new EventContext(entity, target, session);
+                var @event = new Event(context, eventDef);
                 if (target != session.Player)
                 {
                     @event.AIDo();
@@ -36,4 +37,3 @@ internal class EventSystem : IEventSystem
         }
     }
 }
-

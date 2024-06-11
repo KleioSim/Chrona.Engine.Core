@@ -1,11 +1,24 @@
-﻿namespace Chrona.Engine.Core.Interfaces;
+﻿using Chrona.Engine.Core.Events;
 
-//public interface IOption
-//{
-//    public IEnumerable<IMessageBind> MessageBinds { get; }
-//}
+namespace Chrona.Engine.Core.Interfaces;
+
 public interface IOption
 {
     string Desc { get; }
-    IEnumerable<IMessage> Do(IEntity from, IEntity to, ISession session);
+    string Tip { get; }
+
+    void Do();
+}
+
+public interface IOptionDef
+{
+    Func<IEventContext, string> GetDesc { get; }
+    Func<IEventContext, IEnumerable<IMessage>> ProductMessage { get; }
+}
+
+public interface IEventContext
+{
+    IEntity From { get; }
+    IEntity To { get; }
+    ISession Session { get; }
 }

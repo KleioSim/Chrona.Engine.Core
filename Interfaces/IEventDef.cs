@@ -12,8 +12,9 @@
 
 public interface IEventDef
 {
-    bool IsSatisfied(IEntity entity, ISession session);
-    IEntity FindTarget(IEntity entity, ISession session);
 
-    public IOption Option { get; }
+    public Func<IEntity, ISession, bool> IsSatisfied { get; }
+    public Func<IEntity, ISession, IEntity> FindTarget { get; }
+
+    public IOptionDef OptionDef { get; }
 }
