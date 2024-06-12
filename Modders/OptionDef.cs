@@ -17,4 +17,6 @@ public abstract class EventDef : IEventDef
     public abstract Func<IEntity, ISession, bool> IsSatisfied { get; }
 
     public abstract Func<IEntity, ISession, IEntity> FindTarget { get; }
+
+    public abstract PlayerFlag playerFlag { get; }
 }

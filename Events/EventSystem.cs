@@ -9,22 +9,27 @@ internal class EventSystem : IEventSystem
 
     public IEnumerable<IEvent> OnNexturn(ISession session, Dictionary<Type, IEnumerable<IEventDef>> eventDefs)
     {
-        foreach (var entity in session.Entities)
+        foreach (var from in session.Entities)
         {
-            foreach (var eventDef in eventDefs[entity.GetType()])
+            foreach (var eventDef in eventDefs[from.GetType()])
             {
-                if (!eventDef.IsSatisfied(entity, session))
+                if (eventDef.playerFlag == PlayerFlag.ForAI && from == session.Player)
                 {
                     continue;
                 }
 
-                var target = eventDef.FindTarget(entity, session);
+                if (!eventDef.IsSatisfied(from, session))
+                {
+                    continue;
+                }
+
+                var target = eventDef.FindTarget(from, session);
                 if (target == null)
                 {
                     continue;
                 }
 
-                var context = new EventContext(entity, target, session);
+                var context = new EventContext(from, target, session);
                 var @event = new Event(context, eventDef);
                 if (target != session.Player)
                 {
