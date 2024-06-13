@@ -29,7 +29,7 @@ internal class EventSystem : IEventSystem
                     continue;
                 }
 
-                var context = new EventContext(from, target, session);
+                var context = new ProcessContext(from, target, session);
                 var @event = new Event(context, eventDef);
                 if (target != session.Player)
                 {

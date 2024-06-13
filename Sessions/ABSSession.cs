@@ -17,6 +17,8 @@ public abstract class ABSSession : ISession
 
     public IModder Modder { get; set; }
 
+    public int UpdateFlag { get; private set; }
+
     public Dictionary<Type, MethodInfo> dictMessageProcess = new Dictionary<Type, MethodInfo>();
 
     public ABSSession()
@@ -48,6 +50,8 @@ public abstract class ABSSession : ISession
 
     public void OnMessage(IMessage message)
     {
+        UpdateFlag++;
+
         dictMessageProcess[message.GetType()].Invoke(this, new object[] { message });
     }
 }

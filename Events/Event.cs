@@ -12,9 +12,9 @@ public class Event : IEvent
 
     private IEventDef Def { get; }
 
-    private EventContext context { get; }
+    private ProcessContext context { get; }
 
-    public Event(EventContext context, IEventDef def)
+    public Event(ProcessContext context, IEventDef def)
     {
         this.context = context;
         Def = def;
@@ -28,13 +28,13 @@ public class Event : IEvent
     }
 }
 
-public struct EventContext : IEventContext
+public struct ProcessContext : IProcessContext
 {
     public IEntity From { get; }
     public IEntity To { get; }
     public ISession Session { get; }
 
-    public EventContext(IEntity from, IEntity target, ISession session)
+    public ProcessContext(IEntity from, IEntity target, ISession session)
     {
         this.From = from;
         this.To = target;

@@ -1,5 +1,6 @@
 ﻿using Chrona.Engine.Core.Events;
 using Chrona.Engine.Core.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace Chrona.Engine.Core;
 
@@ -16,6 +17,7 @@ public class Chroncle
             if (session != null)
             {
                 Option.ProcessMessage = session.OnMessage;
+                Interaction.ProcessMessage = session.OnMessage;
             }
         }
     }

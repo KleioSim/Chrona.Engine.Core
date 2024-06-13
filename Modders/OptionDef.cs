@@ -5,9 +5,9 @@ namespace Chrona.Engine.Core.Modders;
 
 public class OptionDef : IOptionDef
 {
-    public Func<IEventContext, IEnumerable<IMessage>> ProductMessage { get; init; }
+    public Func<IProcessContext, IEnumerable<IMessage>> ProductMessage { get; init; }
 
-    public Func<IEventContext, string> GetDesc { get; init; }
+    public Func<IProcessContext, string> GetDesc { get; init; }
 }
 
 public abstract class EventDef : IEventDef
@@ -19,4 +19,13 @@ public abstract class EventDef : IEventDef
     public abstract Func<IEntity, ISession, IEntity> FindTarget { get; }
 
     public abstract PlayerFlag playerFlag { get; }
+}
+
+public abstract class InteractionDef : IInteractionDef
+{
+    public abstract Func<IEntity, ISession, IEnumerable<IMessage>> Invoke { get; }
+
+    public abstract Func<IEntity, ISession, bool> IsVaild { get; }
+
+    public abstract string GetDesc(IEntity owner);
 }

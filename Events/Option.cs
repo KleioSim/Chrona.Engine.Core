@@ -13,9 +13,9 @@ public class Option : IOption
 
     public IOptionDef Def { get; }
 
-    private EventContext context;
+    private ProcessContext context;
 
-    public Option(IOptionDef Def, EventContext context)
+    public Option(IOptionDef Def, ProcessContext context)
     {
         this.Def = Def;
         this.context = context;

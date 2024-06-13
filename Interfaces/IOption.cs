@@ -12,11 +12,11 @@ public interface IOption
 
 public interface IOptionDef
 {
-    Func<IEventContext, string> GetDesc { get; }
-    Func<IEventContext, IEnumerable<IMessage>> ProductMessage { get; }
+    Func<IProcessContext, string> GetDesc { get; }
+    Func<IProcessContext, IEnumerable<IMessage>> ProductMessage { get; }
 }
 
-public interface IEventContext
+public interface IProcessContext
 {
     IEntity From { get; }
     IEntity To { get; }
