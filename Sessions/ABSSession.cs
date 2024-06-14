@@ -4,11 +4,6 @@ using System.Reflection;
 namespace Chrona.Engine.Core.Sessions;
 
 
-public abstract class Entity : IEntity
-{
-
-}
-
 
 public abstract class ABSSession : ISession
 {
@@ -45,7 +40,10 @@ public abstract class ABSSession : ISession
 
     public void OnNextTurn()
     {
-
+        foreach (var entity in Entities)
+        {
+            entity.IsInteractionDateOut = false;
+        }
     }
 
     public void OnMessage(IMessage message)
