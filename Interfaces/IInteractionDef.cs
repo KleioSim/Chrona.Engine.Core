@@ -4,7 +4,7 @@ public interface IInteractionDef
 {
     string GetDesc(IEntity owner);
 
-    Func<IEntity, ISession, bool> IsVaild { get; }
+    IEnumerable<(bool flag, string desc)> GetVaildGroups(IEntity owner, ISession session);
 
     Func<IEntity, ISession, IEnumerable<IMessage>> Invoke { get; }
 }

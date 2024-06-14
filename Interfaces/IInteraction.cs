@@ -4,7 +4,7 @@ public interface IInteraction
 {
     string Desc { get; }
 
-    bool IsVaild(ISession session);
-
     void Invoke(ISession session);
+
+    IEnumerable<(bool flag, string desc)> GetVaildGroups(ISession session);
 }

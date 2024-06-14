@@ -25,7 +25,7 @@ public abstract class InteractionDef : IInteractionDef
 {
     public abstract Func<IEntity, ISession, IEnumerable<IMessage>> Invoke { get; }
 
-    public abstract Func<IEntity, ISession, bool> IsVaild { get; }
-
     public abstract string GetDesc(IEntity owner);
+
+    public abstract IEnumerable<(bool flag, string desc)> GetVaildGroups(IEntity owner, ISession session);
 }

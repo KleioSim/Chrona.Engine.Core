@@ -8,6 +8,15 @@ public class Interaction : IInteraction
 
     public string Desc => def.GetDesc(owner);
 
+    private readonly IInteractionDef def;
+    private readonly IEntity owner;
+
+
+    public Interaction(IInteractionDef def, IEntity owner)
+    {
+        this.def = def;
+        this.owner = owner;
+    }
 
     public void Invoke(ISession session)
     {
@@ -17,17 +26,8 @@ public class Interaction : IInteraction
         }
     }
 
-    private readonly IInteractionDef def;
-    private readonly IEntity owner;
-
-    public bool IsVaild(ISession session)
+    public IEnumerable<(bool flag, string desc)> GetVaildGroups(ISession session)
     {
-        return def.IsVaild(owner, session);
-    }
-
-    public Interaction(IInteractionDef def, IEntity owner)
-    {
-        this.def = def;
-        this.owner = owner;
+        return def.GetVaildGroups(owner, session);
     }
 }
