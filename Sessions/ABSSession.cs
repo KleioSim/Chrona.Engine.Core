@@ -5,7 +5,7 @@ namespace Chrona.Engine.Core.Sessions;
 
 
 
-public abstract class ABSSession : ISession
+public abstract class AbstractSession : ISession
 {
     public abstract IEntity Player { get; set; }
     public abstract IEnumerable<IEntity> Entities { get; }
@@ -16,7 +16,7 @@ public abstract class ABSSession : ISession
 
     public Dictionary<Type, MethodInfo> dictMessageProcess = new Dictionary<Type, MethodInfo>();
 
-    public ABSSession()
+    public AbstractSession()
     {
         var methods = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic)
             .Where(x => x.GetCustomAttribute<MessageProcessAttribute>() != null);
