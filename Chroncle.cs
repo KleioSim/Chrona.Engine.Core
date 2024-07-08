@@ -1,5 +1,6 @@
 ﻿using Chrona.Engine.Core.Events;
 using Chrona.Engine.Core.Interfaces;
+using Chrona.Engine.Core.Sessions;
 using Microsoft.VisualBasic;
 
 namespace Chrona.Engine.Core;
@@ -46,5 +47,11 @@ public class Chroncle
         }
 
         Session.OnNextTurn();
+    }
+
+    public T GetSession<T>()
+        where T : AbstractSession
+    {
+        return Session as T;
     }
 }
