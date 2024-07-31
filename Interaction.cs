@@ -4,7 +4,7 @@ namespace Chrona.Engine.Core;
 
 public class Interaction : IInteraction
 {
-    public static Action<IMessage>? ProcessMessage;
+    public static Action<IMessage> ProcessMessage;
 
     public string Desc => def.GetDesc(owner);
 

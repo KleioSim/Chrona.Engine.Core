@@ -5,7 +5,7 @@ namespace Chrona.Engine.Core.Events;
 
 public class Option : IOption
 {
-    public static Action<IMessage>? ProcessMessage;
+    public static Action<IMessage> ProcessMessage;
 
     public string Tip => throw new NotImplementedException();
 

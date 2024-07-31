@@ -7,7 +7,7 @@ namespace Chrona.Engine.Core;
 
 public class Chroncle
 {
-    public ISession? Session
+    public ISession Session
     {
         get => session;
         set
@@ -27,7 +27,7 @@ public class Chroncle
 
     private IEventSystem eventSystem = new EventSystem();
 
-    private ISession? session;
+    private ISession session;
 
     public Chroncle(IModder modder)
     {
