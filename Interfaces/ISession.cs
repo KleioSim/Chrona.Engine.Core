@@ -2,7 +2,6 @@
 
 public interface ISession
 {
-    int UpdateFlag { get; }
     IEntity Player { get; }
     IEnumerable<IEntity> Entities { get; }
     void OnNextTurn();

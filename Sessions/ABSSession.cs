@@ -12,8 +12,6 @@ public abstract class AbstractSession : ISession
 
     public IModder Modder { get; set; }
 
-    public int UpdateFlag { get; private set; }
-
     public Dictionary<Type, MethodInfo> dictMessageProcess = new Dictionary<Type, MethodInfo>();
 
     public AbstractSession()
@@ -48,8 +46,6 @@ public abstract class AbstractSession : ISession
 
     public void OnMessage(IMessage message)
     {
-        UpdateFlag++;
-
         dictMessageProcess[message.GetType()].Invoke(this, new object[] { message });
     }
 }
