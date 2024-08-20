@@ -20,7 +20,7 @@ public class Interaction : IInteraction
 
     public void Invoke(ISession session)
     {
-        owner.IsInteractionDateOut = true;
+        //owner.IsInteractionDateOut = true;
 
         foreach (var message in def.Invoke(owner, session))
         {

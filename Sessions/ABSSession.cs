@@ -8,7 +8,7 @@ namespace Chrona.Engine.Core.Sessions;
 public abstract class AbstractSession : ISession
 {
     public abstract IEntity Player { get; set; }
-    public abstract IEnumerable<IEntity> Entities { get; }
+    public abstract IReadOnlyDictionary<string, IEntity> Entities { get; }
 
     public IModder Modder { get; set; }
 
@@ -36,13 +36,13 @@ public abstract class AbstractSession : ISession
         }
     }
 
-    public void OnNextTurn()
-    {
-        foreach (var entity in Entities)
-        {
-            entity.IsInteractionDateOut = false;
-        }
-    }
+    //public void OnNextTurn()
+    //{
+    //    foreach (var entity in Entities)
+    //    {
+    //        entity.IsInteractionDateOut = false;
+    //    }
+    //}
 
     public void OnMessage(IMessage message)
     {

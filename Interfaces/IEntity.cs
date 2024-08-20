@@ -2,6 +2,7 @@
 
 public interface IEntity
 {
-    bool IsInteractionDateOut { get; set; }
-    IEnumerable<IInteraction> Interactions { get; }
+    string Id { get; }
+    //bool IsInteractionDateOut { get; set; }
+    //IEnumerable<IInteraction> Interactions { get; }
 }

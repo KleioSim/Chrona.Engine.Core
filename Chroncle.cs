@@ -25,7 +25,7 @@ public class Chroncle
 
     public IModder Modder { get; }
 
-    private IEventSystem eventSystem = new EventSystem();
+    //private IEventSystem eventSystem = new EventSystem();
 
     private ISession session;
 
@@ -34,20 +34,20 @@ public class Chroncle
         this.Modder = modder;
     }
 
-    public IEnumerable<IEvent> OnNextTurn()
-    {
-        if (Session == null)
-        {
-            throw new InvalidOperationException();
-        }
+    //public IEnumerable<IEvent> OnNextTurn()
+    //{
+    //    if (Session == null)
+    //    {
+    //        throw new InvalidOperationException();
+    //    }
 
-        foreach (var @event in eventSystem.OnNexturn(Session, Modder.EventDefs))
-        {
-            yield return @event;
-        }
+    //    foreach (var @event in eventSystem.OnNexturn(Session, Modder.EventDefs))
+    //    {
+    //        yield return @event;
+    //    }
 
-        Session.OnNextTurn();
-    }
+    //    Session.OnNextTurn();
+    //}
 
     public T GetSession<T>()
         where T : AbstractSession
