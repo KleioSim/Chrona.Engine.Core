@@ -16,6 +16,8 @@ public abstract class AbstractSession : ISession
 
     public AbstractSession()
     {
+        IEntity.SendMessage = OnMessage;
+
         var methods = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic)
             .Where(x => x.GetCustomAttribute<MessageProcessAttribute>() != null);
 

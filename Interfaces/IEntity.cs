@@ -2,6 +2,7 @@
 
 public interface IEntity
 {
+    static Action<IMessage> SendMessage { get; set; }
     string Id { get; }
     //bool IsInteractionDateOut { get; set; }
     //IEnumerable<IInteraction> Interactions { get; }
