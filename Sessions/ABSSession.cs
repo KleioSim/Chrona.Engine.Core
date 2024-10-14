@@ -16,7 +16,7 @@ public abstract class AbstractSession : ISession
 
     public AbstractSession()
     {
-        IEntity.SendMessage = OnMessage;
+        //IEntity.SendMessage = OnMessage;
 
         var methods = this.GetType().GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic)
             .Where(x => x.GetCustomAttribute<MessageProcessAttribute>() != null);
@@ -46,6 +46,7 @@ public abstract class AbstractSession : ISession
     //    }
     //}
 
+    [DataChange]
     public void OnMessage(IMessage message)
     {
         dictMessageProcess[message.GetType()].Invoke(this, new object[] { message });
