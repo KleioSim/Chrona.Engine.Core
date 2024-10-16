@@ -6,10 +6,10 @@ using System.Reflection;
 namespace Chrona.Engine.Core;
 
 
-public class Decorator<T> : DispatchProxy
+public class Decorator : DispatchProxy
 {
     public static uint Label { get; private set; }
-    private T _decorated;
+    private object _decorated;
 
     private Dictionary<MethodInfo, bool> method2DataChangeFlag = new Dictionary<MethodInfo, bool>();
 
@@ -36,15 +36,17 @@ public class Decorator<T> : DispatchProxy
         return result;
     }
 
-    public static T Create(T decorated)
+    public static T Create<T>(T decorated)
     {
-        object proxy = Create<T, Decorator<T>>();
-        ((Decorator<T>)proxy).SetParameters(decorated);
+        Label++;
+
+        object proxy = Create<T, Decorator>();
+        ((Decorator)proxy).SetParameters(decorated);
 
         return (T)proxy;
     }
 
-    private void SetParameters(T decorated)
+    private void SetParameters<T>(T decorated)
     {
         if (decorated == null)
         {
