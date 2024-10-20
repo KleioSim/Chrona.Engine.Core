@@ -8,7 +8,7 @@ namespace Chrona.Engine.Core;
 
 public class Decorator : DispatchProxy
 {
-    public static uint Label { get; private set; }
+    public static uint Label { get; set; }
     private object _decorated;
 
     private Dictionary<MethodInfo, bool> method2DataChangeFlag = new Dictionary<MethodInfo, bool>();
