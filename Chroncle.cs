@@ -1,25 +1,25 @@
 ﻿using Chrona.Engine.Core.Events;
 using Chrona.Engine.Core.Interfaces;
-using Chrona.Engine.Core.Sessions;
+//using Chrona.Engine.Core.Sessions;
 using Microsoft.VisualBasic;
 
 namespace Chrona.Engine.Core;
 
 public class Chroncle
 {
-    public ISession Session
+    public object Session
     {
         get => session;
         set
         {
             session = value;
 
-            Option.ProcessMessage = null;
-            if (session != null)
-            {
-                Option.ProcessMessage = session.OnMessage;
-                Interaction.ProcessMessage = session.OnMessage;
-            }
+            //Option.ProcessMessage = null;
+            //if (session != null)
+            //{
+            //    Option.ProcessMessage = session.OnMessage;
+            //    Interaction.ProcessMessage = session.OnMessage;
+            //}
         }
     }
 
@@ -27,7 +27,7 @@ public class Chroncle
 
     //private IEventSystem eventSystem = new EventSystem();
 
-    private ISession session;
+    private object session;
 
     public Chroncle(IModder modder)
     {
@@ -49,9 +49,9 @@ public class Chroncle
     //    Session.OnNextTurn();
     //}
 
-    public T GetSession<T>()
-        where T : AbstractSession
-    {
-        return Session as T;
-    }
+    //public T GetSession<T>()
+    //    where T : AbstractSession
+    //{
+    //    return Session as T;
+    //}
 }
